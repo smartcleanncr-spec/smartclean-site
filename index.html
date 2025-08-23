@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SmartClean - Clean Made Simple</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0; padding: 0;
+      background: #f8f9fa;
+      color: #333;
+    }
+    header {
+      background: #2c7be5;
+      color: white;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    header h1 { margin: 0; font-size: 2.5rem; }
+    header p { margin: 10px 0 0; }
+    .plans {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 40px 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+    .plan {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      padding: 20px;
+      text-align: center;
+      transition: 0.3s;
+    }
+    .plan:hover { transform: translateY(-5px); }
+    .plan img {
+      width: 60px;
+      margin-bottom: 15px;
+    }
+    .price {
+      font-size: 1.5rem;
+      color: #2c7be5;
+      margin: 10px 0;
+    }
+    .btn {
+      display: inline-block;
+      background: #2c7be5;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-top: 10px;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #222;
+      color: #aaa;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>SmartClean</h1>
+    <p>Door-to-Door Dustbin Pickup Service</p>
+  </header>
+
+  <section class="plans">
+    <div class="plan">
+      <img src="https://img.icons8.com/ios-filled/100/2c7be5/trash.png" alt="Dustbin">
+      <h2>Per Dustbin Pickup</h2>
+      <p class="price">₹50</p>
+      <a class="btn" href="https://wa.me/91XXXXXXXXXX?text=Pickup%20Request%20for%20Per%20Dustbin">Book Now</a>
+    </div>
+
+    <div class="plan">
+      <img src="https://img.icons8.com/ios-filled/100/2c7be5/recycle.png" alt="Weekly">
+      <h2>Weekly Plan</h2>
+      <p class="price">₹300</p>
+      <a class="btn" href="https://wa.me/91XXXXXXXXXX?text=Pickup%20Request%20for%20Weekly%20Plan">Book Now</a>
+    </div>
+
+    <div class="plan">
+      <img src="https://img.icons8.com/ios-filled/100/2c7be5/leaf.png" alt="Monthly">
+      <h2>Monthly Plan</h2>
+      <p class="price">₹999</p>
+      <a class="btn" href="https://wa.me/91XXXXXXXXXX?text=Pickup%20Request%20for%20Monthly%20Plan">Book Now</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 SmartClean. All Rights Reserved.</p>
+  </footer>
+</body>
+</html>
