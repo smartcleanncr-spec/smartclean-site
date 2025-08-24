@@ -1,103 +1,186 @@
-<!-- Header with logo -->
-<header style="text-align: center; padding: 10px;">
-  <img src="logo.jpg" alt="Smart Clean Logo" style="height: 80px;">
-</header>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SmartClean - Clean Made Simple</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0; padding: 0;
-      background: #f8f9fa;
-      color: #333;
-    }
-    header {
-      background: #2c7be5;
-      color: white;
-      text-align: center;
-      padding: 40px 20px;
-    }
-    header h1 { margin: 0; font-size: 2.5rem; }
-    header p { margin: 10px 0 0; }
-    .plans {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      padding: 40px 20px;
-      max-width: 1000px;
-      margin: auto;
-    }
-    .plan {
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      padding: 20px;
-      text-align: center;
-      transition: 0.3s;
-    }
-    .plan:hover { transform: translateY(-5px); }
-    .plan img {
-      width: 60px;
-      margin-bottom: 15px;
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SmartClean - Dynamic Theme</title>
+<style>
+  /* Base Styles */
+  body {
+    margin: 0; padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #3498db;
+    color: #fff;
+    transition: background-color 1s ease;
+  }
+  header {
+    padding: 40px 20px;
+    text-align: center;
+    background: rgba(0,0,0,0.2);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+  header img {
+    height: 80px;
+    margin-bottom: 15px;
+  }
+  header h1 {
+    margin: 0;
+    font-size: 3rem;
+    letter-spacing: 2px;
+  }
+  header p {
+    margin-top: 10px;
+    font-size: 1.25rem;
+    font-weight: 300;
+  }
+  .plans {
+    max-width: 1000px;
+    margin: 40px auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+    gap: 30px;
+    padding: 0 20px;
+  }
+  .plan {
+    background: rgba(255,255,255,0.1);
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    padding: 30px 20px;
+    text-align: center;
+    transition: transform 0.3s ease, background 0.3s ease;
+  }
+  .plan:hover {
+    transform: translateY(-10px);
+    background: rgba(255,255,255,0.25);
+  }
+  .plan img {
+    width: 70px;
+    margin-bottom: 20px;
+  }
+  .plan h2 {
+    margin-bottom: 15px;
+    font-weight: 600;
+  }
+  .price {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+  .btn {
+    padding: 14px 28px;
+    border-radius: 50px;
+    font-weight: 600;
+    text-decoration: none;
+    color: white;
+    background: #2980b9;
+    display: inline-block;
+    transition: background-color 0.4s ease;
+  }
+  .btn:hover {
+    background: #1c5980;
+  }
+  footer {
+    text-align: center;
+    padding: 25px 20px;
+    background: rgba(0,0,0,0.3);
+    color: #ddd;
+    font-weight: 300;
+  }
+
+  /* Responsive font scaling */
+  @media (max-width: 600px) {
+    header h1 {
+      font-size: 2rem;
     }
     .price {
       font-size: 1.5rem;
-      color: #2c7be5;
-      margin: 10px 0;
     }
-    .btn {
-      display: inline-block;
-      background: #2c7be5;
-      color: white;
-      padding: 10px 20px;
-      border-radius: 6px;
-      text-decoration: none;
-      margin-top: 10px;
-    }
-    footer {
-      text-align: center;
-      padding: 20px;
-      background: #222;
-      color: #aaa;
-      margin-top: 30px;
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
-  <header>
-    <h1>SmartClean</h1>
-    <p>India's First Door-to-Door Dustbin Pickup Service</p>
-  </header>
 
-  <section class="plans">
-    <div class="plan">
-      <img src="https://img.icons8.com/ios-filled/100/2c7be5/trash.png" alt="Dustbin">
-      <h2>Alternate Day Dustbin Pickup</h2>
-      <p class="price">₹49</p>
-      <a class="btn" href="https://wa.me/919953354555?text=Pickup%20Request%20for%20Per%20Dustbin">Book Now</a>
-    </div>
+<header>
+  <img src="logo.jpg" alt="Smart Clean Logo" />
+  <h1>SmartClean</h1>
+  <p>India's First Door-to-Door Dustbin Pickup Service</p>
+</header>
 
-    <div class="plan">
-      <img src="https://img.icons8.com/ios-filled/100/2c7be5/recycle.png" alt="Weekly">
-      <h2>Weekly Dustbin Pickup</h2>
-      <p class="price">₹299</p>
-      <a class="btn" href="https://wa.me/919953354555?text=Pickup%20Request%20for%20Weekly%20Plan">Book Now</a>
-    </div>
+<section class="plans">
+  <div class="plan">
+    <img src="https://img.icons8.com/ios-filled/100/ffffff/trash.png" alt="Dustbin" />
+    <h2>Alternate Day Dustbin Pickup</h2>
+    <p class="price">₹49</p>
+    <a class="btn" href="https://wa.me/919953354555?text=Pickup%20Request%20for%20Per%20Dustbin">Book Now</a>
+  </div>
+  <div class="plan">
+    <img src="https://img.icons8.com/ios-filled/100/ffffff/recycle.png" alt="Weekly" />
+    <h2>Weekly Dustbin Pickup</h2>
+    <p class="price">₹299</p>
+    <a class="btn" href="https://wa.me/919953354555?text=Pickup%20Request%20for%20Weekly%20Plan">Book Now</a>
+  </div>
+  <div class="plan">
+    <img src="https://img.icons8.com/ios-filled/100/ffffff/leaf.png" alt="Monthly" />
+    <h2>Monthly Dustbin Pickup</h2>
+    <p class="price">₹999</p>
+    <a class="btn" href="https://wa.me/919953354555?text=Pickup%20Request%20for%20Monthly%20Plan">Book Now</a>
+  </div>
+</section>
 
-    <div class="plan">
-      <img src="https://img.icons8.com/ios-filled/100/2c7be5/leaf.png" alt="Monthly">
-      <h2>Monthly Dustbin Pickup</h2>
-      <p class="price">₹999</p>
-      <a class="btn" href="https://wa.me/919953354555?text=Pickup%20Request%20for%20Monthly%20Plan">Book Now</a>
-    </div>
-  </section>
+<footer>
+  <p>© 2025 SmartClean. All Rights Reserved.</p>
+</footer>
 
-  <footer>
-    <p>© 2025 SmartClean. All Rights Reserved.</p>
-  </footer>
+<script>
+  // Define an array of theme colors
+  const themeColors = [
+    '#3498db',  // blue
+    '#e67e22',  // orange
+    '#27ae60',  // green
+    '#8e44ad',  // purple
+    '#c0392b'   // red
+  ];
+
+  let currentIndex = 0;
+
+  function changeThemeColor() {
+    // Update body background color
+    document.body.style.backgroundColor = themeColors[currentIndex];
+    // Update buttons background color
+    const buttons = document.querySelectorAll('.btn');
+    buttons.forEach(btn => {
+      btn.style.backgroundColor = themeColors[currentIndex];
+    });
+    // Update button hover color - slightly darker
+    const hoverColor = shadeColor(themeColors[currentIndex], -20);
+    buttons.forEach(btn => {
+      btn.onmouseover = () => btn.style.backgroundColor = hoverColor;
+      btn.onmouseout = () => btn.style.backgroundColor = themeColors[currentIndex];
+    });
+
+    currentIndex = (currentIndex + 1) % themeColors.length;
+  }
+
+  // Helper function to darken/lighten color
+  function shadeColor(color, percent) {
+    let f=parseInt(color.slice(1),16),
+        t=percent<0?0:255,
+        p=Math.abs(percent)/100,
+        R=f>>16,
+        G=f>>8&0x00FF,
+        B=f&0x0000FF;
+    return "#" + (0x1000000 + 
+      (Math.round((t-R)*p)+R)*0x10000 + 
+      (Math.round((t-G)*p)+G)*0x100 + 
+      (Math.round((t-B)*p)+B))
+      .toString(16).slice(1);
+  }
+
+  // Initial call
+  changeThemeColor();
+  // Change theme color every 5 seconds
+  setInterval(changeThemeColor, 5000);
+</script>
+
 </body>
 </html>
