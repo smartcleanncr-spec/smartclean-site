@@ -4,148 +4,76 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>SmartClean — Door‑to‑Door Dustbin Pickup</title>
-  <meta name="description" content="India’s first door‑to‑door dustbin pickup. Book via WhatsApp. Alternate‑day, weekly, monthly plans. Eco‑friendly pickup 8 AM–6 PM." />
+  <meta name="description" content="Doorstep dustbin pickup. Alternate‑day, weekly and monthly plans. Book on WhatsApp. Secure sign‑in and online payments via Razorpay." />
   <meta name="theme-color" content="#0ea5e9">
+  <link rel="preconnect" href="https://checkout.razorpay.com" crossorigin>
   <style>
     :root{
-      --bg: #0b1220;            /* dark by default */
-      --panel: #111827;
-      --muted: #94a3b8;
-      --text: #e5e7eb;
-      --brand: #22d3ee;         /* cyan */
-      --brand-ink:#083344;
-      --accent: #0ea5e9;        /* sky */
-      --success:#22c55e;
-      --warn:#f59e0b;
-      --danger:#ef4444;
-      --ring: rgba(14,165,233,.45);
-      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --bg: #0b1220; --panel:#111827; --muted:#94a3b8; --text:#e5e7eb;
+      --brand:#22d3ee; --accent:#0ea5e9; --ring: rgba(14,165,233,.45);
+      --shadow: 0 12px 30px rgba(0,0,0,.35);
       --card: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      --success:#22c55e; --danger:#ef4444;
     }
-    
-    /* Light theme tokens */
-    .theme-light{
-      --bg: #f8fafc;
-      --panel:#ffffff;
-      --muted:#475569;
-      --text:#0f172a;
-      --brand:#06b6d4;
-      --brand-ink:#cffafe;
-      --accent:#0284c7;
-      --ring: rgba(2,132,199,.35);
-      --shadow: 0 10px 30px rgba(2,8,23,.08);
-      --card: linear-gradient(180deg, rgba(2,8,23,.04), rgba(2,8,23,.01));
-    }
-
+    .theme-light{ --bg:#f8fafc; --panel:#ffffff; --muted:#475569; --text:#0f172a; --brand:#06b6d4; --accent:#0284c7; --ring: rgba(2,132,199,.35); --shadow:0 10px 30px rgba(2,8,23,.08); --card:linear-gradient(180deg, rgba(2,8,23,.04), rgba(2,8,23,.01)); }
     *{box-sizing:border-box}
     html,body{height:100%}
-    body{
-      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      background: var(--bg); color: var(--text);
-    }
-    
+    body{margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans; background:var(--bg); color:var(--text)}
     a{color:inherit}
-    button{font:inherit}
-
     .container{max-width:1100px; margin:0 auto; padding:24px}
-
-    header{
-      position:sticky; top:0; backdrop-filter: blur(10px);
-      background: linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,0));
-      border-bottom: 1px solid rgba(255,255,255,.06);
-      z-index:20;
-    }
-
-    .nav{
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
-      padding:14px 24px; max-width:1100px; margin:0 auto;
-    }
-
-    .brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+    header{position:sticky; top:0; z-index:30; backdrop-filter: blur(10px); background:linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,0)); border-bottom:1px solid rgba(255,255,255,.06)}
+    .nav{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px 24px; max-width:1100px; margin:0 auto}
+    .brand{display:flex; align-items:center; gap:12px; text-decoration:none}
     .logo{width:36px;height:36px;border-radius:12px;background:conic-gradient(from 180deg, var(--brand), var(--accent));box-shadow:var(--shadow)}
-    .brand h1{font-size:18px; margin:0; letter-spacing:.2px}
+    .brand h1{font-size:18px; margin:0}
     .tag{font-size:12px; opacity:.8}
-
     .row{display:flex; align-items:center; gap:10px}
-
-    .btn{
-      padding:10px 14px; border-radius:12px; border:1px solid rgba(255,255,255,.12);
-      background: var(--panel); color:var(--text); cursor:pointer;
-      transition:.2s transform, .2s opacity, .2s box-shadow; box-shadow: var(--shadow);
-    }
+    .btn{padding:10px 14px; border-radius:12px; border:1px solid rgba(255,255,255,.12); background:var(--panel); color:var(--text); cursor:pointer; transition:.2s transform, .2s opacity, .2s box-shadow; box-shadow: var(--shadow)}
     .btn:hover{transform: translateY(-1px)}
-    .btn.primary{background: linear-gradient(180deg, var(--brand), var(--accent)); color:#002;
-      border: none;
-    }
+    .btn.primary{background: linear-gradient(180deg, var(--brand), var(--accent)); color:#002; border:none}
     .btn.ghost{background: transparent; border:1px solid rgba(255,255,255,.2)}
+
+    /* Kebab (three dots) */
+    .kebab{position:fixed; right:18px; top:50%; transform: translateY(-50%); width:46px; height:46px; border-radius:16px; background:var(--panel); border:1px solid rgba(255,255,255,.1); display:grid; place-items:center; cursor:pointer; z-index:50; box-shadow: var(--shadow)}
+    .dots{display:flex; flex-direction:column; gap:4px}
+    .dot{width:4px; height:4px; border-radius:999px; background:var(--text); opacity:.8}
+
+    .drawer{position:fixed; right:-320px; top:0; height:100%; width:320px; z-index:60; transition:.28s ease-in-out; background:var(--panel); border-left:1px solid rgba(255,255,255,.08); box-shadow:var(--shadow); display:flex; flex-direction:column}
+    .drawer.open{right:0}
+    .drawer .hd{display:flex; align-items:center; justify-content:space-between; padding:18px}
+    .drawer .menu{display:flex; flex-direction:column; gap:6px; padding:0 12px 18px}
+    .item{display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:12px; cursor:pointer}
+    .item:hover{background:rgba(255,255,255,.06)}
+    .muted{color:var(--muted)}
 
     /* Hero */
     .hero{padding: 28px 24px 6px}
     .hero-inner{display:grid;grid-template-columns: 1.2fr .8fr; gap:24px}
     @media (max-width:900px){.hero-inner{grid-template-columns:1fr}}
-
-    .welcome{
-      background: var(--card); border:1px solid rgba(255,255,255,.08); border-radius:20px;
-      padding:24px; box-shadow: var(--shadow);
-    }
+    .welcome{background: var(--card); border:1px solid rgba(255,255,255,.08); border-radius:20px; padding:24px; box-shadow: var(--shadow)}
     .welcome h2{margin:0 0 8px; font-size:32px; line-height:1.1}
     .welcome p{margin:0 0 16px; color:var(--muted)}
     .badges{display:flex; gap:10px; flex-wrap:wrap}
     .badge{padding:8px 12px; border-radius:999px; background: rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); font-size:12px}
-
-    .illus{
-      background: radial-gradient(100% 100% at 20% 0%, var(--brand) 0%, transparent 42%),
-                  radial-gradient(80% 70% at 90% 20%, var(--accent) 0%, transparent 48%),
-                  var(--panel);
-      border:1px solid rgba(255,255,255,.08); border-radius:20px; box-shadow:var(--shadow);
-      display:flex; align-items:center; justify-content:center; padding:20px;
-      min-height:240px;
-    }
+    .illus{background: radial-gradient(100% 100% at 20% 0%, var(--brand) 0%, transparent 42%), radial-gradient(80% 70% at 90% 20%, var(--accent) 0%, transparent 48%), var(--panel); border:1px solid rgba(255,255,255,.08); border-radius:20px; box-shadow:var(--shadow); display:flex; align-items:center; justify-content:center; padding:20px; min-height:240px}
 
     /* Plans */
     .plans{padding: 18px 24px 60px}
-    .plans h3{margin:0 0 16px}
+    .plans h3{margin:0 0 16px; text-align:center}
     .grid{display:grid; grid-template-columns: repeat(3, 1fr); gap:16px}
     @media (max-width:900px){.grid{grid-template-columns:1fr}}
-
-    .card{
-      background: var(--card); border:1px solid rgba(255,255,255,.08); border-radius:18px;
-      padding:18px; box-shadow: var(--shadow); position:relative; overflow:hidden;
-    }
+    .card{background: var(--card); border:1px solid rgba(255,255,255,.08); border-radius:18px; padding:18px; box-shadow: var(--shadow); position:relative; overflow:hidden}
     .card h4{margin:0 0 6px; font-size:18px}
-    .price{font-size:28px; font-weight:700; margin:6px 0 12px}
+    .price{font-size:28px; font-weight:700; margin:6px 0 12px; color:var(--brand)}
     .features{margin:0 0 14px; padding:0 0 0 18px; color:var(--muted)}
     .select{display:flex; gap:8px}
+    .ribbon{position:absolute; top:12px; right:-32px; background:#22c55e; color:#001; padding:6px 40px; transform:rotate(45deg); font-size:12px; font-weight:700}
 
-    /* Kebab floating button */
-    .kebab{position:fixed; right:18px; top:50%; transform: translateY(-50%);
-      width:46px; height:46px; border-radius:16px; background:var(--panel);
-      border:1px solid rgba(255,255,255,.1); display:grid; place-items:center; cursor:pointer; z-index:50;
-      box-shadow: var(--shadow);
-    }
-    .kebab:hover{box-shadow:0 14px 40px rgba(0,0,0,.45)}
-    .dots{display:flex; flex-direction:column; gap:4px}
-    .dot{width:4px; height:4px; border-radius:999px; background:var(--text); opacity:.8}
-
-    /* Side drawer */
-    .drawer{position:fixed; right:-320px; top:0; height:100%; width:320px; z-index:60; transition:.28s ease-in-out;
-      background:var(--panel); border-left:1px solid rgba(255,255,255,.08); box-shadow:var(--shadow);
-      display:flex; flex-direction:column;
-    }
-    .drawer.open{right:0}
-    .drawer header{position:relative; background:transparent; border:0}
-    .drawer .hd{display:flex; align-items:center; justify-content:space-between; padding:18px 18px 6px}
-    .drawer .menu{display:flex; flex-direction:column; padding:6px 12px 12px; gap:6px}
-    .item{display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:12px; cursor:pointer}
-    .item:hover{background:rgba(255,255,255,.06)}
-    .muted{color:var(--muted)}
-
-    /* Support FABs */
+    /* FABs */
     .fabwrap{position:fixed; left:18px; bottom:18px; display:flex; flex-direction:column; gap:8px; z-index:40}
     .fab{display:flex; align-items:center; gap:8px; padding:10px 14px; background:var(--panel); border:1px solid rgba(255,255,255,.1); border-radius:999px; text-decoration:none; box-shadow:var(--shadow)}
     .fab strong{font-size:14px}
 
-    /* Footer */
     footer{padding:30px 24px; border-top:1px solid rgba(255,255,255,.1); text-align:center; color:var(--muted)}
 
     /* Modals */
@@ -160,30 +88,19 @@
     .toast{position:fixed; top:18px; left:50%; transform:translateX(-50%); background:var(--panel); border:1px solid rgba(255,255,255,.12); color:var(--text); padding:10px 14px; border-radius:999px; display:none; z-index:90; box-shadow:var(--shadow)}
     .pill{display:inline-flex; gap:8px; align-items:center; padding:6px 10px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); border-radius:999px; font-size:12px}
 
-    /* Hide elements utility */
     .hide{display:none !important}
   </style>
 </head>
 <body>
-  <!-- Toast (welcome) -->
   <div id="toast" class="toast" role="status" aria-live="polite">👋 Welcome to SmartClean — quick, eco‑friendly pickup at your door!</div>
 
   <!-- Kebab menu button -->
-  <button class="kebab" id="kebab" aria-label="Open options">
-    <div class="dots" aria-hidden="true">
-      <span class="dot"></span>
-      <span class="dot"></span>
-      <span class="dot"></span>
-    </div>
-  </button>
+  <button class="kebab" id="kebab" aria-label="Open options"><div class="dots" aria-hidden="true"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div></button>
 
   <!-- Right drawer -->
   <aside class="drawer" id="drawer" aria-hidden="true">
     <div class="hd">
-      <div>
-        <strong>Options</strong>
-        <div class="muted" id="drawerUser">Not signed in</div>
-      </div>
+      <div><strong>Options</strong><div class="muted" id="drawerUser">Not signed in</div></div>
       <button class="btn ghost" id="closeDrawer">✕</button>
     </div>
     <nav class="menu">
@@ -196,13 +113,7 @@
 
   <header>
     <div class="nav">
-      <a class="brand" href="#" aria-label="SmartClean Home">
-        <div class="logo" aria-hidden="true"></div>
-        <div>
-          <h1>SmartClean</h1>
-          <div class="tag">Door‑to‑Door Dustbin Pickup</div>
-        </div>
-      </a>
+      <a class="brand" href="#" aria-label="SmartClean Home"><div class="logo" aria-hidden="true"></div><div><h1>SmartClean</h1><div class="tag">Door‑to‑Door Dustbin Pickup</div></div></a>
       <div class="row">
         <button class="btn ghost" id="themeToggle">🌓 Theme</button>
         <button class="btn" id="loginBtn">Sign In</button>
@@ -221,7 +132,7 @@
             <span class="badge">✅ Reliable pickup</span>
             <span class="badge">🟢 WhatsApp booking</span>
             <span class="badge">♻️ Eco‑friendly</span>
-            <span class="badge">🛡️ Secure sign‑in</span>
+            <span class="badge">🔐 Secure sign‑in</span>
           </div>
           <div style="margin-top:16px; display:flex; gap:10px; flex-wrap:wrap">
             <a class="btn primary" href="#plans">See Plans</a>
@@ -229,24 +140,14 @@
           </div>
         </div>
         <div class="illus" aria-hidden="true">
-          <!-- Simple SVG illustration -->
           <svg width="260" height="180" viewBox="0 0 260 180" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <rect x="10" y="40" width="90" height="120" rx="12" fill="url(#g1)"/>
             <rect x="110" y="20" width="60" height="140" rx="12" fill="url(#g2)"/>
             <rect x="180" y="60" width="70" height="100" rx="12" fill="url(#g3)"/>
             <defs>
-              <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
-                <stop stop-color="currentColor"/>
-                <stop offset="1" stop-color="currentColor"/>
-              </linearGradient>
-              <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1">
-                <stop stop-color="currentColor"/>
-                <stop offset="1" stop-color="currentColor"/>
-              </linearGradient>
-              <linearGradient id="g3" x1="0" y1="0" x2="1" y2="1">
-                <stop stop-color="currentColor"/>
-                <stop offset="1" stop-color="currentColor"/>
-              </linearGradient>
+              <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop stop-color="currentColor"/><stop offset="1" stop-color="currentColor"/></linearGradient>
+              <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1"><stop stop-color="currentColor"/><stop offset="1" stop-color="currentColor"/></linearGradient>
+              <linearGradient id="g3" x1="0" y1="0" x2="1" y2="1"><stop stop-color="currentColor"/><stop offset="1" stop-color="currentColor"/></linearGradient>
             </defs>
           </svg>
         </div>
@@ -256,81 +157,58 @@
     <section id="plans" class="plans container">
       <h3>Choose your plan</h3>
       <div class="grid">
-        <article class="card" data-plan="Alternate‑Day" data-price="49">
+        <article class="card" data-plan="Alternate‑Day" data-price="49" data-desc="Pickup every other day">
           <h4>Alternate‑Day Pickup</h4>
-          <div class="price">₹49<span class="muted" style="font-weight:400"> / visit</span></div>
+          <div class="price">₹49 <span class="muted" style="font-weight:400">/ visit</span></div>
           <ul class="features">
             <li>Pickup every other day</li>
             <li>Doorstep service 8 AM – 6 PM</li>
             <li>WhatsApp reminders</li>
           </ul>
-          <div class="select">
-            <button class="btn primary planBtn">Select Plan</button>
-            <button class="btn ghost detailsBtn">Details</button>
-          </div>
+          <div class="select"><button class="btn primary planBtn">Book Now</button><button class="btn ghost detailsBtn">Details</button></div>
         </article>
-        
-        <article class="card" data-plan="Weekly" data-price="299">
+
+        <article class="card" data-plan="Weekly" data-price="299" data-desc="1 pickup per week">
+          <div class="ribbon">Most Popular</div>
           <h4>Weekly Pickup</h4>
-          <div class="price">₹299<span class="muted" style="font-weight:400"> / month</span></div>
+          <div class="price">₹299 <span class="muted" style="font-weight:400">/ month</span></div>
           <ul class="features">
             <li>1 pickup per week</li>
             <li>Low effort, set & forget</li>
             <li>Priority support</li>
           </ul>
-          <div class="select">
-            <button class="btn primary planBtn">Select Plan</button>
-            <button class="btn ghost detailsBtn">Details</button>
-          </div>
+          <div class="select"><button class="btn primary planBtn">Book Now</button><button class="btn ghost detailsBtn">Details</button></div>
         </article>
-        
-        <article class="card" data-plan="Monthly" data-price="999">
+
+        <article class="card" data-plan="Monthly" data-price="999" data-desc="Flexible schedule & bulk">
           <h4>Monthly Pickup</h4>
-          <div class="price">₹999<span class="muted" style="font-weight:400"> / month</span></div>
+          <div class="price">₹999 <span class="muted" style="font-weight:400">/ month</span></div>
           <ul class="features">
             <li>Flexible schedule</li>
             <li>Best for bulk waste</li>
             <li>Auto‑renew option</li>
           </ul>
-          <div class="select">
-            <button class="btn primary planBtn">Select Plan</button>
-            <button class="btn ghost detailsBtn">Details</button>
-          </div>
+          <div class="select"><button class="btn primary planBtn">Book Now</button><button class="btn ghost detailsBtn">Details</button></div>
         </article>
       </div>
     </section>
   </main>
 
   <div class="fabwrap">
-    <a class="fab" href="tel:+918383816624" aria-label="Call support">
-      📞 <strong>Call</strong> <span class="muted">83838 16624</span>
-    </a>
-    <a class="fab" href="https://wa.me/918383816624" target="_blank" rel="noopener" aria-label="WhatsApp support">
-      🟢 <strong>WhatsApp</strong>
-    </a>
+    <a class="fab" href="tel:+918383816624" aria-label="Call support">📞 <strong>Call</strong> <span class="muted">83838 16624</span></a>
+    <a class="fab" href="https://wa.me/918383816624" target="_blank" rel="noopener" aria-label="WhatsApp support">🟢 <strong>WhatsApp</strong></a>
   </div>
 
-  <footer>
-    © <span id="yr"></span> SmartClean • Made with ♻️ for cleaner cities.
-  </footer>
+  <footer>© <span id="yr"></span> SmartClean • Made with ♻️ for cleaner cities.</footer>
 
   <!-- Auth Modal -->
   <div class="modal-backdrop" id="authBackdrop" role="dialog" aria-modal="true" aria-labelledby="authTitle">
     <div class="modal">
       <h3 id="authTitle">Sign in to continue</h3>
-      <div class="pill" style="margin-bottom:10px">🔒 Your number is used only to sign in</div>
-      <div class="field">
-        <label for="phone">Mobile Number</label>
-        <input id="phone" type="tel" inputmode="numeric" placeholder="e.g. 98765 43210" maxlength="14" />
-      </div>
-      <div class="field">
-        <label for="name">Name</label>
-        <input id="name" type="text" placeholder="Your name" />
-      </div>
-      <div class="modal-actions">
-        <button class="btn ghost" id="authCancel">Cancel</button>
-        <button class="btn primary" id="authSubmit">Continue</button>
-      </div>
+      <div class="pill" style="margin-bottom:10px">🔒 Your info is used only to sign in</div>
+      <div class="field"><label for="phone">Mobile Number</label><input id="phone" type="tel" inputmode="numeric" placeholder="e.g. 98765 43210" maxlength="14" /></div>
+      <div class="field"><label for="name">Name</label><input id="name" type="text" placeholder="Your name" /></div>
+      <div class="modal-actions"><button class="btn ghost" id="authCancel">Cancel</button><button class="btn primary" id="authSubmit">Continue</button></div>
     </div>
   </div>
 
@@ -339,12 +217,8 @@
     <div class="modal">
       <h3 id="bookTitle">Confirm your booking</h3>
       <div class="pill" id="bookingPlan"></div>
-      <div class="field">
-        <label for="date">Pickup date</label>
-        <input id="date" type="date" />
-      </div>
-      <div class="field">
-        <label for="window">Time window</label>
+      <div class="field"><label for="date">Pickup date</label><input id="date" type="date" /></div>
+      <div class="field"><label for="window">Time window</label>
         <select id="window">
           <option>8:00 AM – 10:00 AM</option>
           <option>10:00 AM – 12:00 PM</option>
@@ -353,114 +227,61 @@
           <option>4:00 PM – 6:00 PM</option>
         </select>
       </div>
-      <div class="modal-actions">
-        <button class="btn ghost" id="bookCancel">Cancel</button>
-        <button class="btn primary" id="bookConfirm">Book Now</button>
-      </div>
+      <div class="modal-actions"><button class="btn ghost" id="bookCancel">Cancel</button><button class="btn primary" id="bookPay">Pay & Book</button></div>
     </div>
   </div>
 
+  <!-- Razorpay Checkout -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <script>
     const el = (id)=>document.getElementById(id);
+    const INR = (n)=> new Intl.NumberFormat('en-IN',{style:'currency',currency:'INR', maximumFractionDigits:0}).format(n);
 
-    // Initial theme from localStorage
+    // Theme
     const theme = localStorage.getItem('theme') || 'dark';
     if(theme==='light') document.documentElement.classList.add('theme-light');
-
-    // Year
     el('yr').textContent = new Date().getFullYear();
 
-    // Toast welcome
+    // Toast
     const toast = el('toast');
-    function showToast(msg, ms=2800){
-      toast.textContent = msg; toast.style.display='inline-flex';
-      setTimeout(()=> toast.style.display='none', ms);
-    }
-    window.addEventListener('load', ()=>{
-      showToast('👋 Welcome to SmartClean — quick, eco‑friendly pickup at your door!');
-    });
+    function showToast(msg, ms=2800){ toast.textContent = msg; toast.style.display='inline-flex'; setTimeout(()=> toast.style.display='none', ms); }
+    window.addEventListener('load', ()=>{ showToast('👋 Welcome to SmartClean — quick, eco‑friendly pickup at your door!'); });
 
-    // Drawer logic
-    const drawer = el('drawer');
-    const kebab = el('kebab');
-    const closeDrawer = el('closeDrawer');
+    // Drawer
+    const drawer = el('drawer'); const kebab = el('kebab'); const closeDrawer = el('closeDrawer');
     kebab.addEventListener('click', ()=>{drawer.classList.add('open'); drawer.setAttribute('aria-hidden','false');});
     closeDrawer.addEventListener('click', ()=>{drawer.classList.remove('open'); drawer.setAttribute('aria-hidden','true');});
 
-    // Theme toggle (header + drawer item)
-    function toggleTheme(){
-      document.documentElement.classList.toggle('theme-light');
-      const isLight = document.documentElement.classList.contains('theme-light');
-      localStorage.setItem('theme', isLight ? 'light' : 'dark');
-      showToast(isLight ? '☀️ Light theme on' : '🌙 Dark theme on');
-    }
-    el('themeToggle').addEventListener('click', toggleTheme);
-    el('themeToggleItem').addEventListener('click', toggleTheme);
+    // Theme toggle
+    function toggleTheme(){ document.documentElement.classList.toggle('theme-light'); const isLight=document.documentElement.classList.contains('theme-light'); localStorage.setItem('theme', isLight ? 'light':'dark'); showToast(isLight ? '☀️ Light theme on' : '🌙 Dark theme on'); }
+    document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+    document.getElementById('themeToggleItem').addEventListener('click', toggleTheme);
 
-    // Simple auth (localStorage, no backend)
-    const loginBtn = el('loginBtn');
-    const signInOut = el('signInOut');
-    const drawerUser = el('drawerUser');
-    const authBackdrop = el('authBackdrop');
-    const authCancel = el('authCancel');
-    const authSubmit = el('authSubmit');
-
-    function getUser(){
-      try { return JSON.parse(localStorage.getItem('sc_user')||'null'); } catch { return null }
-    }
-    function setUser(user){
-      localStorage.setItem('sc_user', JSON.stringify(user));
-      updateAuthUI();
-    }
-    function signOut(){
-      localStorage.removeItem('sc_user');
-      updateAuthUI();
-      showToast('Signed out');
-    }
-    function updateAuthUI(){
-      const user = getUser();
-      if(user){
-        loginBtn.textContent = 'Hi, ' + (user.name||'User');
-        signInOut.innerHTML = '🚪 <span>Sign Out</span>';
-        drawerUser.textContent = (user.name||'User') + ' • ' + (user.phone||'');
-      } else {
-        loginBtn.textContent = 'Sign In';
-        signInOut.innerHTML = '🔐 <span>Sign In</span>';
-        drawerUser.textContent = 'Not signed in';
-      }
-    }
+    // Auth (localStorage only)
+    const loginBtn = el('loginBtn'); const signInOut = el('signInOut'); const drawerUser = el('drawerUser');
+    const authBackdrop = el('authBackdrop'); const authCancel = el('authCancel'); const authSubmit = el('authSubmit');
+    function getUser(){ try { return JSON.parse(localStorage.getItem('sc_user')||'null'); } catch { return null } }
+    function setUser(u){ localStorage.setItem('sc_user', JSON.stringify(u)); updateAuthUI(); }
+    function signOut(){ localStorage.removeItem('sc_user'); updateAuthUI(); showToast('Signed out'); }
+    function updateAuthUI(){ const u=getUser(); if(u){ loginBtn.textContent='Hi, '+(u.name||'User'); signInOut.innerHTML='🚪 <span>Sign Out</span>'; drawerUser.textContent=(u.name||'User')+' • '+(u.phone||''); } else { loginBtn.textContent='Sign In'; signInOut.innerHTML='🔐 <span>Sign In</span>'; drawerUser.textContent='Not signed in'; } }
     updateAuthUI();
-
     function openAuth(){ authBackdrop.style.display='flex'; el('phone').focus(); }
     function closeAuth(){ authBackdrop.style.display='none'; }
-
     loginBtn.addEventListener('click', openAuth);
-    signInOut.addEventListener('click', ()=>{
-      if(getUser()) signOut(); else openAuth();
-    });
+    signInOut.addEventListener('click', ()=>{ if(getUser()) signOut(); else openAuth(); });
     authCancel.addEventListener('click', closeAuth);
-    authSubmit.addEventListener('click', ()=>{
-      const phone = el('phone').value.trim();
-      const name = el('name').value.trim() || 'SmartClean User';
-      if(!phone) return showToast('Enter your mobile number');
-      setUser({phone, name});
-      closeAuth();
-      showToast('Welcome, ' + name + ' 👋');
-    });
+    authSubmit.addEventListener('click', ()=>{ const phone=el('phone').value.trim(); const name=el('name').value.trim()||'SmartClean User'; if(!phone) return showToast('Enter your mobile number'); setUser({phone, name}); closeAuth(); showToast('Welcome, '+name+' 👋'); });
 
-    // Plan gating + booking
-    const bookBackdrop = el('bookBackdrop');
-    const bookingPlan = el('bookingPlan');
-    const bookCancel = el('bookCancel');
-    const bookConfirm = el('bookConfirm');
+    // Plans & Booking
+    const bookBackdrop = el('bookBackdrop'); const bookingPlan = el('bookingPlan');
+    const bookCancel = el('bookCancel'); const bookPay = el('bookPay');
+    let currentSelection = null; // {plan, price, desc}
 
-    function openBooking(planName, price){
-      bookingPlan.textContent = planName + ' • ₹' + price;
-      const today = new Date();
-      const yyyy = today.getFullYear();
-      const mm = String(today.getMonth()+1).padStart(2,'0');
-      const dd = String(today.getDate()+1).padStart(2,'0');
-      el('date').value = yyyy + '-' + mm + '-' + dd;
+    function openBooking(plan, price, desc){
+      currentSelection = {plan, price, desc};
+      bookingPlan.textContent = `${plan} • ${INR(price)}`;
+      const today = new Date(); const yyyy=today.getFullYear(); const mm=String(today.getMonth()+1).padStart(2,'0'); const dd=String(today.getDate()+1).padStart(2,'0');
+      el('date').value = `${yyyy}-${mm}-${dd}`;
       bookBackdrop.style.display='flex';
     }
     function closeBooking(){ bookBackdrop.style.display='none'; }
@@ -468,43 +289,64 @@
     document.querySelectorAll('.planBtn').forEach(btn=>{
       btn.addEventListener('click', (e)=>{
         const card = e.target.closest('.card');
-        const plan = card.dataset.plan; const price = card.dataset.price;
+        const plan = card.dataset.plan; const price = parseInt(card.dataset.price,10); const desc = card.dataset.desc || '';
         if(!getUser()) { openAuth(); return; }
-        openBooking(plan, price);
+        openBooking(plan, price, desc);
       });
     });
-
     document.querySelectorAll('.detailsBtn').forEach(btn=>{
       btn.addEventListener('click', (e)=>{
         const card = e.target.closest('.card');
-        const plan = card.dataset.plan; const price = card.dataset.price;
-        showToast(plan + ' • ₹' + price);
+        showToast(`${card.dataset.plan} • ${INR(card.dataset.price)}`);
       });
     });
-
     bookCancel.addEventListener('click', closeBooking);
-    bookConfirm.addEventListener('click', ()=>{
-      const user = getUser();
-      if(!user){ closeBooking(); openAuth(); return; }
-      const date = el('date').value; const windowSel = el('window').value;
-      closeBooking();
-      // Simulate booking success and guide to WhatsApp
-      showToast('✅ Booking confirmed for ' + date + ' • ' + windowSel);
-      setTimeout(()=>{
-        const msg = encodeURIComponent(`Hi SmartClean! I confirmed my booking.\nName: ${user.name}\nPhone: ${user.phone}\nDate: ${date}\nWindow: ${windowSel}`);
-        window.open(`https://wa.me/918383816624?text=${msg}`, '_blank');
-      }, 600);
-    });
+
+    // Razorpay payment (client-side demo)
+    function payWithRazorpay(){
+      const user = getUser(); if(!user){ closeBooking(); openAuth(); return; }
+      const date = el('date').value; const timeWindow = el('window').value;
+      const amountPaise = (currentSelection.price || 0) * 100; // INR to paise
+
+      const options = {
+        key: 'rzp_test_XXXXXXXXXXXXXXXX', // TODO: replace with your Razorpay Key ID
+        amount: amountPaise,
+        currency: 'INR',
+        name: 'SmartClean',
+        description: `${currentSelection.plan} — ${currentSelection.desc || ''}`.trim(),
+        image: 'https://smartclean.homes/favicon.ico',
+        // For production, create an order on your server and pass order_id
+        // order_id: 'order_DBJOWzybf0sJbb',
+        prefill: { name: user.name || '', contact: user.phone || '' },
+        notes: { plan: currentSelection.plan, date, window: timeWindow },
+        theme: { color: '#0ea5e9' },
+        modal: { ondismiss: function(){ showToast('Payment canceled'); } },
+        handler: function (response){
+          // Payment success
+          closeBooking();
+          showToast('✅ Payment successful • Booking confirmed');
+          // Send details to WhatsApp
+          setTimeout(()=>{
+            const msg = encodeURIComponent(
+              `Hi SmartClean! Payment done and booking confirmed.\n`+
+              `Plan: ${currentSelection.plan}\nAmount: ${INR(currentSelection.price)}\n`+
+              `Name: ${user.name}\nPhone: ${user.phone}\nDate: ${date}\nWindow: ${timeWindow}\n`+
+              `Razorpay Payment ID: ${response.razorpay_payment_id}`
+            );
+            window.open(`https://wa.me/918383816624?text=${msg}`, '_blank');
+          }, 700);
+        }
+      };
+
+      const rzp = new Razorpay(options);
+      rzp.open();
+    }
+
+    bookPay.addEventListener('click', payWithRazorpay);
 
     // Close modals with ESC & backdrop click
-    document.querySelectorAll('.modal-backdrop').forEach(b=>{
-      b.addEventListener('click', (e)=>{ if(e.target===b) b.style.display='none'; });
-    });
-    window.addEventListener('keydown', (e)=>{
-      if(e.key==='Escape'){
-        [authBackdrop, bookBackdrop].forEach(b=> b.style.display='none');
-      }
-    });
+    document.querySelectorAll('.modal-backdrop').forEach(b=>{ b.addEventListener('click', (e)=>{ if(e.target===b) b.style.display='none'; }); });
+    window.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ [authBackdrop, bookBackdrop].forEach(b=> b.style.display='none'); } });
   </script>
 </body>
 </html>
